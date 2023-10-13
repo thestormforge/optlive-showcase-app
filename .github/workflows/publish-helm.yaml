@@ -1,0 +1,31 @@
+name: Build and Push Docker image to GHCR
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v2
+
+      - name: Set up Helm
+        uses: azure/setup-helm@v1
+        with:
+          version: '3.4.3'  # Specify the desired Helm version
+
+      - name: Lint and Package Helm Chart
+        run: |
+          helm lint .
+          helm package . -d ./dist
+
+      - name: Publish Helm Chart to GitHub Packages
+        uses: helm/chart-releaser-action@v1.2.0
+        with:
+          charts_dir: dist
+          charts_repo_url: https://${{ secrets.TARGET_ORG }}.github.io/optlive-showcase-app
+          token: ${{ secrets.GHCR_PAT }}
