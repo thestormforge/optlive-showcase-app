@@ -16,10 +16,9 @@ jobs:
       - name: Set up Helm
         uses: azure/setup-helm@v3
 
-      - name: Lint and Package Helm Chart
+      - name: Lint Helm Chart
         run: |
           helm lint .
-          helm package . -d ./dist
 
       - name: Publish Helm Chart to GitHub Packages
         uses: helm/chart-releaser-action@v1.5.0
@@ -28,5 +27,4 @@ jobs:
           CR_OWNER: "${{ secrets.TARGET_ORG }}"
           CR_TOKEN: "${{ secrets.GHCR_PAT }}"
         with:
-          charts_dir: dist
-          skip_packaging: true
+          charts_dir: .
