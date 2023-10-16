@@ -25,4 +25,4 @@ jobs:
           version=$(grep 'version:' charts/optlive-showcase-app/Chart.yaml | awk '{print $2}' | tr -d '"')
           helm package charts/optlive-showcase-app
           helm registry login registry.stormforge.io --username ${{ secrets.SF_HARBOR_USER }} --password ${{ secrets.SF_HARBOR_SECRET }}
-          helm push optlive-showcase-app-sversion.tgz oci://registry.stormforge.io/examples
+          helm push optlive-showcase-app-$version.tgz oci://registry.stormforge.io/examples
