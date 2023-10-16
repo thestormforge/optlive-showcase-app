@@ -29,3 +29,4 @@ jobs:
           CR_TOKEN: "${{ secrets.GHCR_PAT }}"
         with:
           charts_dir: dist
+          skip_packaging: true
