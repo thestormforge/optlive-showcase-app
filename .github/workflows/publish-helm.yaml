@@ -24,7 +24,8 @@ jobs:
       - name: Publish Helm Chart to GitHub Packages
         uses: helm/chart-releaser-action@v1.5.0
         env:
+          CR_GIT_REPO: optlive-showcase-app
+          CR_OWNER: "${{ secrets.TARGET_ORG }}"
           CR_TOKEN: "${{ secrets.GHCR_PAT }}"
         with:
           charts_dir: dist
-          charts_repo_url: https://${{ secrets.TARGET_ORG }}.github.io/optlive-showcase-app
