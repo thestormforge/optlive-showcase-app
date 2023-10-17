@@ -29,7 +29,6 @@ spec:
       - name: loadgen-scripts-vol
         configMap:
           name: loadgen-scripts
-      restartPolicy: Never
       containers:
         - name: {{ .Chart.Name }}-loadgen
           securityContext:
