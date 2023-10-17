@@ -25,6 +25,7 @@ spec:
       serviceAccountName: {{ include "optlive-showcase-app.serviceAccountName" . }}
       securityContext:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      restartPolicy: never
       volumes:
       - name: loadgen-scripts-vol
         configMap:
@@ -40,7 +41,6 @@ spec:
           command:
           - /bin/sh
           - /loadgen/loadgen.sh
-          restartPolicy: never
         - name: {{ .Chart.Name }}
           securityContext:
             {{- toYaml .Values.securityContext | nindent 12 }}
