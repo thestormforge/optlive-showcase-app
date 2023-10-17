@@ -29,6 +29,7 @@ spec:
       - name: loadgen-scripts-vol
         configMap:
           name: loadgen-scripts
+      restartPolicy: never
       containers:
         - name: {{ .Chart.Name }}-loadgen
           securityContext:
@@ -40,7 +41,6 @@ spec:
           command:
           - /bin/sh
           - /loadgen/loadgen.sh
-          restartPolicy: never
         - name: {{ .Chart.Name }}
           securityContext:
             {{- toYaml .Values.securityContext | nindent 12 }}
