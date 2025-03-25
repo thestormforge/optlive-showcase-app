@@ -4,32 +4,17 @@ metadata:
   name: loadgen-scripts
 data:
   loadgen.sh: |
+    echo "waiting for consumer to start..."
+    while :; do
+      if curl -X POST -fs http://localhost:8080/GetCurrentStatus >/dev/null 2>&1; then
+        echo "...started"
+        break
+      fi
+      echo "(1 sec)"
+      sleep 1
+    done
     date
-    echo "Sending 1st loadgen request of 10m for 10s"
-    curl -s --data "millicores=10&durationSec=10" http://localhost:8080/ConsumeCPU
-    sleep 10
-    date
-    echo "Sending 2nd loadgen request of 10m for 10s"
-    curl -s --data "millicores=10&durationSec=10" http://localhost:8080/ConsumeCPU
-    sleep 10
-    date
-    echo "Sending 3rd loadgen request of 10m for 10s"
-    curl -s --data "millicores=10&durationSec=10" http://localhost:8080/ConsumeCPU
-    sleep 10
-    date
-    echo "Sending 4th loadgen request of 10m for 10s"
-    curl -s --data "millicores=10&durationSec=10" http://localhost:8080/ConsumeCPU
-    sleep 10
-    date
-    echo "Sending 5th loadgen request of 10m for 10s"
-    curl -s --data "millicores=10&durationSec=10" http://localhost:8080/ConsumeCPU
-    sleep 10
-    date
-    echo "Sending 6th loadgen request of 10m for 10s"
-    curl -s --data "millicores=10&durationSec=10" http://localhost:8080/ConsumeCPU
-    sleep 10
-    date
-    echo "Sending final loadgen request of 500m for 1d"
+    echo "Sending loadgen request of 500m for 1d"
     curl -s --data "millicores=500&durationSec=86400" http://localhost:8080/ConsumeCPU
     sleep 86400
     exit 0 #to avoid CrashLoopBackoff?
